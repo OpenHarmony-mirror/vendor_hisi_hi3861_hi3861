@@ -1,4 +1,4 @@
-# Copyright (c) Huawei Technologies Co., Ltd. 2020. All rights reserved.
+# Copyright (c) 2020 Huawei Device Co., Ltd. All rights reserved.
 
 import("//build/lite/config/subsystem/lite_subsystem.gni")
 import("//build/lite/config/component/lite_component.gni")

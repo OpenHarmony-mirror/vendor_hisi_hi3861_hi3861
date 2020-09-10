@@ -1,19 +1,18 @@
 /**
  * @file hks_errno.h
  *
- * Copyright (c) Huawei Technologies Co., Ltd. 2019-2019. All rights reserved. \n
- * Description: To define the error code of HKS subsystem.
- *  Since it is an extension of the mbedtls errno,
- *  we use ugly macos here.
- *  Tobe refined in the future, to add errno
- *  description to make bug diagnosize easier.
- *  Add new error code before HKS_ERROR_MBEDTLS_RANGE_MIN
- *  Modify the value of HKS_ERROR_MBEDTLS_RANGE_MIN when adding an error code
- *  The value of HKS_ERROR_MBEDTLS_RANGE_MIN = The value of new error code - 1
- *  Such as add HKS_ERROR_XXX(-153),must modify HKS_ERROR_RANGE_MIN
- *  to be -154 \n
- * Author: Huawei \n
- * Create: 2019-06-19
+ * Copyright (c) 2020 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 /**

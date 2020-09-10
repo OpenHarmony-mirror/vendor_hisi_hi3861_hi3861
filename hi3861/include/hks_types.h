@@ -1,5 +1,5 @@
 /**
- * @file hks_file_api.h
+ * @file hks_types.h
  *
  * Copyright (c) 2020 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");

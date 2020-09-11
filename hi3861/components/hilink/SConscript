@@ -17,11 +17,11 @@ env_cfg.append_environs(env, module)
 common_env.print_log_env(env, env_cfg.get_module_dir(module))
 
 for lib in module_libs:
-    print('lib_name:',lib)
+    print('lib_name:', lib)
     src_path = module_libs[lib]
     objs = []
     for src in src_path:
         objs += env.Object(Glob('*.c'))
     objs.sort()
-    libs += env.Library(lib,objs)
+    libs += env.Library(lib, objs)
 Return('libs')

@@ -77,7 +77,7 @@ INCLUDE := -I$(MAIN_TOPDIR)/include \
 	-I$(MAIN_TOPDIR)/platform/include \
 	-I$(MAIN_TOPDIR)/config \
 	-I$(MAIN_TOPDIR)/config/nv \
-	-I$(MAIN_TOPDIR)/../../../../utils/native/liteos/include \
+	-I$(MAIN_TOPDIR)/../../../../utils/native/lite/include \
 	-I$(MAIN_TOPDIR)/platform/os/Huawei_LiteOS/kernel/include \
 	-I$(MAIN_TOPDIR)/platform/os/Huawei_LiteOS/kernel/base/include \
 	-I$(MAIN_TOPDIR)/platform/os/Huawei_LiteOS/targets/hi3861v100/include \

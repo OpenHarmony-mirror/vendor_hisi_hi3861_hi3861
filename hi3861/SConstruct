@@ -208,9 +208,9 @@ def nvkernel_builder(target, source, env):
 factory_nv = os.path.join(env_cfg.nv_path, env_cfg.nv_factory_name)
 normal_nv = os.path.join(env_cfg.nv_path, env_cfg.nv_normal_name)
 #Build flashboot
-flash_boot_bin = env.SConscript(os.path.join("boot", "flashboot", 'SConscript'), {'env':env, 'env_cfg':env_cfg, 'module':'boot'}, duplicate=0)
+flash_boot_bin = env.SConscript(os.path.join('boot', 'flashboot', 'SConscript'), {'env':env, 'env_cfg':env_cfg, 'module':'boot'}, duplicate=0)
 #Build loaderboot
-loader_boot_bin = env.SConscript(os.path.join("boot", "loaderboot", 'SConscript'), {'env':env, 'env_cfg':env_cfg, 'module':'loaderboot'}, duplicate=0)
+loader_boot_bin = env.SConscript(os.path.join('boot', 'loaderboot', 'SConscript'), {'env':env, 'env_cfg':env_cfg, 'module':'loaderboot'}, duplicate=0)
 #ota object
 ota_flag = 1 if scons_utils.scons_usr_bool_option('CONFIG_COMPRESSION_OTA_SUPPORT') != 'y' else 0
 ota_build_object = pkt_builder.ImageBuild(env_cfg.target_name, ota_mode=ota_flag)
@@ -304,17 +304,17 @@ def burn_bin_builder(target, source, env):
     burn_bin = get_ota_object().BuildHiburnBin(str(target[0]), str(source[0]))
     loader_bin = str(source[1])
     efuse_bin = str(source[2]) if len(source) == 3 else None
-    boot_b = os.path.join("output", "bin", "%s_boot_signed_B.bin"%(env.get("CHIP_TYPE")))
+    boot_b = os.path.join('output', 'bin', '%s_boot_signed_B.bin'%(env.get('CHIP_TYPE')))
     boot_b_size = os.path.getsize(boot_b)
     factory_bin_path = os.path.join('build', 'libs', 'factory_bin')
     factory_bin = os.path.join(factory_bin_path, '%s_factory.bin'%env_cfg.target_name)
     burn_for_erase_bin = os.path.join('build', 'basebin', 'burn_for_erase_4k.bin')
-    #Ö¤Êé°²È«´æ´¢Ê¾Àı
+    #è¯ä¹¦å®‰å…¨å­˜å‚¨ç¤ºä¾‹
     tee_cert1_file = os.path.join('build', 'basebin', 'tee_cert1.bin');
     tee_cert2_file = os.path.join('build', 'basebin', 'tee_cert2.bin');
     tee_key_file = os.path.join('build', 'basebin', 'tee_key.bin');
-    tee_cert_key_bin_max = 12*1024; #±ØĞëÎª4KBÖ¤Êé±¶£¬ĞèÆ¥Åä·ÖÇø±íÈ·¶¨ÉÕĞ´µØÖ·ºÍ´óĞ¡
-    tee_total_file_cnt = 3; #3¸öÎÄ¼ş£º2¸öÖ¤Êé£¬1¸ökey¡£
+    tee_cert_key_bin_max = 12*1024; #å¿…é¡»ä¸º4KBè¯ä¹¦å€ï¼Œéœ€åŒ¹é…åˆ†åŒºè¡¨ç¡®å®šçƒ§å†™åœ°å€å’Œå¤§å°
+    tee_total_file_cnt = 3; #3ä¸ªæ–‡ä»¶ï¼š2ä¸ªè¯ä¹¦ï¼Œ1ä¸ªkeyã€‚
     burn_tee_cert = False
     if ((os.path.exists(tee_cert1_file)) and (os.path.exists(tee_cert2_file)) and (os.path.exists(tee_key_file))):
         burn_tee_cert = True
@@ -331,7 +331,7 @@ def burn_bin_builder(target, source, env):
         fp.write(version_bin)
 
     burn_bin_ease_size = 0x200000;
-    #¸ù¾İ·ÖÇø±íÊÊÅäÉÕĞ´µØÖ·ºÍ´óĞ¡
+    #æ ¹æ®åˆ†åŒºè¡¨é€‚é…çƒ§å†™åœ°å€å’Œå¤§å°
     if (get_hilink_enable() == True):
         burn_bin_ease_size = 0x200000 - 0x8000 - 0x1000 - 0x2000
     if (burn_tee_cert == True):
@@ -365,21 +365,21 @@ def burn_bin_builder(target, source, env):
             with open(tee_key_file, 'rb') as fp:
                 tee_key_bin = fp.read()
 
-            #Ìî³äÍ·²¿½á¹¹
+            #å¡«å……å¤´éƒ¨ç»“æ„
             start_flag = 0xDEADBEEF
             start_flag_bytes = start_flag.to_bytes(4, byteorder = 'little', signed = False)
-            cert_key_bin[0:4] = start_flag_bytes #Ìî³äÄ§Êõ×Ö
+            cert_key_bin[0:4] = start_flag_bytes #å¡«å……é­”æœ¯å­—
             tee_total_file_cnt_bytes = tee_total_file_cnt.to_bytes(4, byteorder = 'little', signed = True)
-            cert_key_bin[4:8] = tee_total_file_cnt_bytes #Ìî³ä×ÜµÄÎÄ¼şÊı
-            #Ìî³ä¸÷ÎÄ¼şµÄ´óĞ¡
+            cert_key_bin[4:8] = tee_total_file_cnt_bytes #å¡«å……æ€»çš„æ–‡ä»¶æ•°
+            #å¡«å……å„æ–‡ä»¶çš„å¤§å°
             cert_key_bin[8:12] = tee_cert1_size.to_bytes(4, byteorder = 'little', signed = True)
             cert_key_bin[12:16] = tee_cert2_size.to_bytes(4, byteorder = 'little', signed = True)
             cert_key_bin[16:20] = tee_key_size.to_bytes(4, byteorder = 'little', signed = True)
-            #Ìî³ä¸÷ÎÄ¼ş
+            #å¡«å……å„æ–‡ä»¶
             cert_key_bin[20:20 + tee_cert1_size] = tee_cert1_bin
             cert_key_bin[20 + tee_cert1_size:20 + tee_cert1_size + tee_cert2_size] = tee_cert2_bin
             cert_key_bin[20 + tee_cert1_size + tee_cert2_size:20 + tee_cert1_size + tee_cert2_size + tee_key_size] = tee_key_bin
-            #Ğ´ÎÄ¼ş
+            #å†™æ–‡ä»¶
             cert_bin_file = os.path.join("output", "bin", '%s_tee_cert_key.bin'%env_cfg.target_name)
             with open(cert_bin_file, 'wb+') as fp:
                 fp.write(cert_key_bin)
@@ -496,7 +496,7 @@ def build_all(build_env, link_sys, flash_boot_bin, loader_boot_bin):
         imgs.append(ota_bin)
         sign_build.AddPostAction(kernel, scons_utils.cleanup) #hook clean
         if sig_key == 'A': #need signature
-            loader_bin = os.path.join("#", env_cfg.bin_path, "%s_loader_signed.bin"%(env.get("CHIP_TYPE")))
+            loader_bin = os.path.join('#', env_cfg.bin_path, '%s_loader_signed.bin'%(env.get('CHIP_TYPE')))
             efuse_bin = os.path.join('build', 'basebin', 'efuse_cfg.bin')
             burn_bin = os.path.join(env_cfg.bin_path, '%s_burn.bin'%env_cfg.target_name)
             allinone_bin = os.path.join(env_cfg.bin_path, '%s_allinone.bin'%env_cfg.target_name)
